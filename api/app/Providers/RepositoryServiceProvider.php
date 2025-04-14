@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Repositories\User\EloquentUserRepository;
-use Illuminate\Support\ServiceProvider;
 use App\Repositories\User\UserRepositoryInterface;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

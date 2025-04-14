@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Repositories\User\UserRepositoryInterface;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /**
-     * @var UserRepositoryInterface
-     */
     private UserRepositoryInterface $user;
 
     public function __construct(UserRepositoryInterface $user)
@@ -38,5 +34,4 @@ class AuthController extends Controller
     {
         return $this->user->me();
     }
-
 }

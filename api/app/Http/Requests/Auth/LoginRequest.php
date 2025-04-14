@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Auth;
 
 use App\Http\Requests\ApiRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends ApiRequest
 {
@@ -31,7 +30,7 @@ class LoginRequest extends ApiRequest
     public function messages(): array
     {
         return [
-            'email.exists' => 'E-mail inválido, corrija este campo.'
+            'email.exists' => 'E-mail inválido, corrija este campo.',
         ];
     }
 }

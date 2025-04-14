@@ -177,3 +177,9 @@ docker-compose exec app npm install
 # Compilar assets
 docker-compose exec app npm run dev
 ```
+
+# PHP CodeSniffer + PHP-CS-Fixer
+`vendor/bin/phpcs --standard=PSR12 app/`
+
+`vendor/bin/phpcs --standard=PSR12 tests/`
+```

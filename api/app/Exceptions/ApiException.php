@@ -7,36 +7,54 @@ use Exception;
 /**
  * Exception created for the API calls
  * It can be serialized into a JSON.
+ *
  * @method errors()
  */
 class ApiException extends Exception
 {
-    const UNKNOWN                    = 1;
+    public const UNKNOWN = 1;
 
-    const USER_BLOCKED               = 14;
-    const MIGRATION_PENDING          = 42;
-    const PROCESSING                 = 102;
-    const VALIDATION                 = 400;
-    const TOKEN_EXPIRED              = 401;
-    const TOKEN_INVALID              = 402;
-    const ACCESS_DENIED              = 403;
-    const NOT_FOUND                  = 404;
-    const USER_NOT_FOUND             = 405;
-    const INVALID_API_KEY            = 406;
-    const USER_NOT_VERIFIED          = 407;
-    const USER_INVALID_EMAIL_TOKEN   = 408;
-    const PAYMENT_ERROR              = 409;
-    const TWO_FA_ERROR               = 410;
-    const PASSWORD_NOT_MATCH         = 411;
-    const METHOD_NOT_ALLOWED         = 412;
-    const BAD_METHOD_CALL            = 413;
-    const EMAIL_NOT_FOUND            = 415;
+    public const USER_BLOCKED = 14;
+
+    public const MIGRATION_PENDING = 42;
+
+    public const PROCESSING = 102;
+
+    public const VALIDATION = 400;
+
+    public const TOKEN_EXPIRED = 401;
+
+    public const TOKEN_INVALID = 402;
+
+    public const ACCESS_DENIED = 403;
+
+    public const NOT_FOUND = 404;
+
+    public const USER_NOT_FOUND = 405;
+
+    public const INVALID_API_KEY = 406;
+
+    public const USER_NOT_VERIFIED = 407;
+
+    public const USER_INVALID_EMAIL_TOKEN = 408;
+
+    public const PAYMENT_ERROR = 409;
+
+    public const TWO_FA_ERROR = 410;
+
+    public const PASSWORD_NOT_MATCH = 411;
+
+    public const METHOD_NOT_ALLOWED = 412;
+
+    public const BAD_METHOD_CALL = 413;
+
+    public const EMAIL_NOT_FOUND = 415;
 
     /**
      * Constructor.
      *
-     * @param int   $code Code
-     * @param array $data Data of the exception
+     * @param  int  $code  Code
+     * @param  array  $data  Data of the exception
      */
     public function __construct($code = 1, $data = [])
     {

@@ -11,15 +11,16 @@ use Illuminate\Validation\ValidationException;
 class EloquentUserRepository extends EloquentCrudRepository implements UserRepositoryInterface
 {
     protected $user;
+
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-//    public function all($with = [], $order = null): \Illuminate\Http\JsonResponse
-//    {
-//
-//    }
+    //    public function all($with = [], $order = null): \Illuminate\Http\JsonResponse
+    //    {
+    //
+    //    }
 
     public function login($request): \Illuminate\Http\JsonResponse
     {
@@ -28,7 +29,7 @@ class EloquentUserRepository extends EloquentCrudRepository implements UserRepos
             'password' => 'required|string',
         ]);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
                 'email' => ['As credenciais estão incorretas.'],
             ]);
@@ -57,7 +58,7 @@ class EloquentUserRepository extends EloquentCrudRepository implements UserRepos
     {
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             throw new ApiException('Usuário não autenticado', 401);
         }
 
@@ -71,7 +72,7 @@ class EloquentUserRepository extends EloquentCrudRepository implements UserRepos
     {
         $user = Auth::user();
 
-        if (!$user) {
+        if (! $user) {
             throw new ApiException('Usuário não autenticado', 401);
         }
 

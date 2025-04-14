@@ -9,7 +9,7 @@ abstract class Request extends FormRequest
     /**
      * Validate the input.
      *
-     * @param  \Illuminate\Validation\Factory $factory
+     * @param  \Illuminate\Validation\Factory  $factory
      * @return \Illuminate\Validation\Validator
      */
     public function validator($factory)
@@ -38,7 +38,7 @@ abstract class Request extends FormRequest
     /**
      * Only gets the validated parameters.
      *
-     * @param  bool $emptyToNull Convert empty values to null ? (false)
+     * @param  bool  $emptyToNull  Convert empty values to null ? (false)
      * @return array Array containing the validated values
      */
     public function onlyValidated($emptyToNull = false)

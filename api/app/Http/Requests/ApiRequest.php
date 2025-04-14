@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Exceptions\ApiException;
-use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
 abstract class ApiRequest extends Request
@@ -35,10 +34,10 @@ abstract class ApiRequest extends Request
      *
      * @throws ApiException
      */
-     protected function failedValidation(Validator $validator)
-     {
-         throw new ApiException(ApiException::VALIDATION, $this->formatErrors($validator));
-     }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new ApiException(ApiException::VALIDATION, $this->formatErrors($validator));
+    }
 
     /**
      * Handle a failed authorization attempt.

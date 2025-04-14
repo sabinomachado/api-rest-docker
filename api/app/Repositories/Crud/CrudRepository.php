@@ -17,8 +17,8 @@ interface CrudRepository
     /**
      * Obtains a list with the given fields
      *
-     * @param  array $select
-     * @param  array $with
+     * @param  array  $select
+     * @param  array  $with
      * @return mixed
      */
     public function select($select, $with = []);
@@ -26,14 +26,14 @@ interface CrudRepository
     /**
      * Loads the model.
      *
-     * @param Model $model
+     * @param  Model  $model
      */
     public function load($model);
 
     /**
      * Gets a model by ID.
      *
-     * @param  int $id The model's ID
+     * @param  int  $id  The model's ID
      * @return Model
      */
     public function find($id);
@@ -41,8 +41,8 @@ interface CrudRepository
     /**
      * Get all instances of associated model filtering by custom field.
      *
-     * @param  string $field field name
-     * @param  mixed  $value field value
+     * @param  string  $field  field name
+     * @param  mixed  $value  field value
      * @param  array  $with
      * @return Collection
      */
@@ -51,7 +51,7 @@ interface CrudRepository
     /**
      * Gets a model by ID.
      *
-     * @param  int $id The model's ID
+     * @param  int  $id  The model's ID
      * @return Model
      */
     public function first($id);
@@ -59,8 +59,8 @@ interface CrudRepository
     /**
      * Get the first instance of associated model filtering by custom field.
      *
-     * @param  string $field field name
-     * @param  mixed  $value field value
+     * @param  string  $field  field name
+     * @param  mixed  $value  field value
      * @param  array  $with
      * @return Model
      */
@@ -69,8 +69,8 @@ interface CrudRepository
     /**
      * Get the first instance of associated model strictly filtering by custom field.
      *
-     * @param  string $field field name
-     * @param  mixed  $value field value
+     * @param  string  $field  field name
+     * @param  mixed  $value  field value
      * @param  array  $with
      * @return Model
      */
@@ -79,8 +79,8 @@ interface CrudRepository
     /**
      * Finds a model, if not exists it creates the model.
      *
-     * @param  array $params
-     * @param  array $delayed
+     * @param  array  $params
+     * @param  array  $delayed
      * @return Model
      */
     public function firstOrCreate($params, $delayed = []);
@@ -88,8 +88,8 @@ interface CrudRepository
     /**
      * Finds a model, if not exists it returns a new model.
      *
-     * @param  array $params
-     * @param  array $delayed
+     * @param  array  $params
+     * @param  array  $delayed
      * @return Model
      */
     public function firstOrNew($params, $delayed = []);
@@ -97,7 +97,7 @@ interface CrudRepository
     /**
      * Creates a model.
      *
-     * @param  array $params The model fields
+     * @param  array  $params  The model fields
      * @return Model
      */
     public function create($params);
@@ -105,8 +105,8 @@ interface CrudRepository
     /**
      * Updates a model.
      *
-     * @param  int   $id     The model's ID
-     * @param  array $params The model fields
+     * @param  int  $id  The model's ID
+     * @param  array  $params  The model fields
      * @return Model
      */
     public function update($id, $params);
@@ -114,7 +114,7 @@ interface CrudRepository
     /**
      * Deletes a model.
      *
-     * @param  int $id The model's ID
+     * @param  int  $id  The model's ID
      * @return bool
      */
     public function delete($id);
@@ -130,8 +130,8 @@ interface CrudRepository
      * Paginates a query.
      *
      * @param  query Query
-     * @param  int         $page  Page to show
-     * @param  int         $limit Items per page
+     * @param  int  $page  Page to show
+     * @param  int  $limit  Items per page
      * @return json Json with the result
      *              - result: Array with the result
      *              - total: Total of items
@@ -143,8 +143,8 @@ interface CrudRepository
     /**
      * Gets the model paginated.
      *
-     * @param  int $page  Page to show
-     * @param  int $limit Items per page
+     * @param  int  $page  Page to show
+     * @param  int  $limit  Items per page
      * @return array Array with the result
      *               - result: Array with the result
      *               - total: Total of items
@@ -170,7 +170,7 @@ interface CrudRepository
     /**
      * Set the number of models to return per page.
      *
-     * @param  int $perPage
+     * @param  int  $perPage
      * @return $this
      */
     public function setPerPage($perPage);
