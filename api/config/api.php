@@ -117,4 +117,13 @@ return [
         'delete-success' => 'Usuário removido com sucesso!',
         'delete-error' => 'Usuário não pode ser removido!',
     ],
+
+    'order' => [
+        'create-success' => 'Pedido criado com sucesso!',
+        'create-error' => 'Erro na criação do pedido!',
+        'update-success' => 'Pedido atualizado com sucesso!',
+        'update-error' => 'Pedido não pode ser atualizado!',
+        'delete-success' => 'Pedido removido com sucesso!',
+        'delete-error' => 'Pedido não pode ser removido!',
+        ],
 ];
