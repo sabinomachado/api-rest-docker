@@ -8,13 +8,17 @@ use App\Repositories\Crud\EloquentCrudRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property User  $model
+ *
+ **/
+
 class EloquentUserRepository extends EloquentCrudRepository implements UserRepositoryInterface
 {
-    protected $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
+    public function __construct(
+        User $user,
+    ) {
+        $this->model = $user;
     }
 
     //    public function all($with = [], $order = null): \Illuminate\Http\JsonResponse
