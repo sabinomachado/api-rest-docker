@@ -1,66 +1,179 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Docker Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositório contém um projeto Laravel configurado para rodar com Docker, incluindo MySQL e MailHog para desenvolvimento local.
 
-## About Laravel
+## Requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Git
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Inicialização do Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clonar o Repositório
 
-## Learning Laravel
+```bash
+git clone git@github.com:sabinomachado/api-rest-docker.git
+cd api
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Configuração do Ambiente
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Copie o arquivo de ambiente de exemplo e ajuste conforme necessário:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+Certifique-se de que o arquivo `.env` contém as seguintes configurações:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=secret
 
-### Premium Partners
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. Iniciar os Containers Docker
 
-## Contributing
+```bash
+docker-compose up -d
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Este comando irá construir e iniciar todos os containers definidos no arquivo `docker-compose.yml`.
 
-## Code of Conduct
+### 4. Instalar Dependências do Laravel
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+docker-compose exec app composer install
+```
 
-## Security Vulnerabilities
+### 5. Gerar Chave da Aplicação
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker-compose exec app php artisan key:generate
+```
 
-## License
+### 6. Executar Migrações do Banco de Dados
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+docker-compose exec app php artisan migrate
+```
+
+## Acessando os Serviços
+
+Após iniciar os containers, você pode acessar os seguintes serviços:
+
+- **Laravel Application**: [http://localhost:8000](http://localhost:8000)
+- **MailHog Interface**: [http://localhost:8025](http://localhost:8025)
+- **MySQL**: Disponível na porta 3306
+    - Host: localhost (ou 127.0.0.1)
+    - Port: 3306
+    - Username: laravel
+    - Password: secret
+    - Database: laravel
+
+## Comandos Úteis
+
+### Gerenciamento de Containers
+
+```bash
+# Iniciar todos os containers
+docker-compose up -d
+
+# Parar todos os containers
+docker-compose down
+
+# Verificar logs dos containers
+docker-compose logs
+
+# Verificar logs de um container específico
+docker-compose logs app
+docker-compose logs mysql
+docker-compose logs mailhog
+```
+
+### Comandos Laravel
+
+```bash
+# Executar migrações
+docker-compose exec app php artisan migrate
+
+# Executar seeds
+docker-compose exec app php artisan db:seed
+
+# Limpar cache
+docker-compose exec app php artisan cache:clear
+
+# Criar um controller
+docker-compose exec app php artisan make:controller NomeController
+
+# Criar um model com migração
+docker-compose exec app php artisan make:model Nome -m
+
+# Executar testes
+docker-compose exec app php artisan test
+```
+
+### Acesso ao Container
+
+```bash
+# Abrir um terminal no container da aplicação
+docker-compose exec app bash
+
+# Abrir um terminal no container MySQL
+docker-compose exec mysql bash
+```
+
+## Solução de Problemas
+
+### Permissões de Arquivo
+
+Se encontrar problemas de permissão ao executar comandos Artisan, tente:
+
+```bash
+docker-compose exec app chmod -R 777 storage bootstrap/cache
+```
+
+### Container não inicia
+
+Verifique se as portas necessárias estão disponíveis (8000, 3306, 8025) e não estão sendo usadas por outros serviços.
+
+```bash
+# Verificar portas em uso (macOS/Linux)
+lsof -i :8000
+lsof -i :3306
+lsof -i :8025
+```
+
+### Problemas de Conexão com o Banco de Dados
+
+Verifique se as configurações no arquivo `.env` correspondem às configuradas no `docker-compose.yml`.
+
+## Desenvolvimento
+
+O diretório do projeto está mapeado para o container, então as alterações feitas localmente serão refletidas no container automaticamente.
+
+Para instalar novas dependências do Composer:
+
+```bash
+docker-compose exec app composer require [pacote]
+```
+
+Para instalar dependências NPM e compilar assets:
+
+```bash
+# Instalar dependências
+docker-compose exec app npm install
+
+# Compilar assets
+docker-compose exec app npm run dev
+```
