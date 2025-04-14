@@ -21,11 +21,6 @@ class EloquentUserRepository extends EloquentCrudRepository implements UserRepos
         $this->model = $user;
     }
 
-    //    public function all($with = [], $order = null): \Illuminate\Http\JsonResponse
-    //    {
-    //
-    //    }
-
     public function login($request): \Illuminate\Http\JsonResponse
     {
         $credentials = $request->validate([

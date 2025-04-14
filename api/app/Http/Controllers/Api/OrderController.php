@@ -17,7 +17,7 @@ class OrderController extends Controller
 
     public function __construct(OrderRepositoryInterface $user)
     {
-        $this->middleware('auth:sanctum');
+        //$this->middleware('auth:sanctum');
         $this->order = $user;
     }
 
