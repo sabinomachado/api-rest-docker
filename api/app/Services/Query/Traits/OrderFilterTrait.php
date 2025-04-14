@@ -2,6 +2,8 @@
 
 namespace App\Services\Query\Traits;
 
+use App\Models\City;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,8 +23,11 @@ trait OrderFilterTrait
             case 'status':
                 $query = $this->orderStatus($query, $options);
                 break;
-            case 'status_array':
-                $query = $this->orderStatusArray($query, $options);
+            case 'city':
+                $query = $this->orderCity($query, $options);
+                break;
+            case 'date_range':
+                $query = $this->orderDateRange($query, $options);
                 break;
             default:
                 break;
@@ -70,8 +75,41 @@ trait OrderFilterTrait
      * @param  array                                 $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    private function orderStatusArray($query, $options = [])
+    private function orderCity($query, $options = [])
     {
-        return $query->whereIn('status', Str::of(Arr::get($options, 'filter'))->explode(','));
+        $filter = Arr::get($options, 'filter');
+
+        $cityIds = City::query()
+            ->where('name', 'like', "%$filter%")
+            ->orWhere('id', $filter)
+            ->pluck('id')
+            ->toArray();
+
+        return $query->whereIn('id_city', $cityIds);
+    }
+
+    /**
+     * Filters a user by the start date
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  array                                 $options
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function orderDateRange($query, $options = [])
+    {
+        $start = Arr::get($options, 'start');
+        $end = Arr::get($options, 'end');
+
+
+        dd("aaaa");
+        if ($start && $end) {
+            $startDate = Carbon::parse($start)->startOfDay();
+            $endDate = Carbon::parse($end)->endOfDay();
+
+            $query->whereBetween('boarding_date', [$startDate, $endDate])
+                ->whereBetween('return_date', [$startDate, $endDate]);
+        }
+
+        return $query;
     }
 }

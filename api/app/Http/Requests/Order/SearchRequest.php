@@ -53,6 +53,21 @@ class SearchRequest extends ApiRequest
             ];
         }
 
+        if ($this->has('city')) {
+            $params['filters'][] = [
+                'name' => 'city',
+                'filter' => $this->get('city'),
+            ];
+        }
+
+        if ($this->has('date_start') && $this->has('date_end')) {
+            $params['filters'][] = [
+                'name' => 'date_at_range',
+                'start' => $this->get('date_start'),
+                'end' => $this->get('date_end'),
+            ];
+        }
+
         return $params;
     }
 
