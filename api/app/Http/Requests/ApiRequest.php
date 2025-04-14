@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Exceptions\ApiException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 abstract class ApiRequest extends Request
 {
@@ -36,7 +37,10 @@ abstract class ApiRequest extends Request
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new ApiException(ApiException::VALIDATION, $this->formatErrors($validator));
+        throw new HttpResponseException(response()->json([
+            'message' => 'Erro na validação',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 
     /**

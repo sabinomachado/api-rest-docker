@@ -22,15 +22,14 @@ class UserController extends Controller
      *
      * @param AllRequest $request
      */
-        public function index(AllRequest $request)
+    public function index(AllRequest $request)
     {
         return UserResourceLight::collection(
             $this->user
-                ->enablePagination()
-                ->setPerPage($request->get(')
+            ->enablePagination()
+            ->setPerPage($request->get(')
                 limit', config('api.common.default-page-size')))
-                ->all($request->get('load', []), $request->order)
+            ->all($request->get('load', []), $request->order)
         );
     }
-
 }

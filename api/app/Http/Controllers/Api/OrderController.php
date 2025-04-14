@@ -7,6 +7,7 @@ use App\Http\Requests\AllRequest;
 use App\Http\Requests\Order\CreateRequest;
 use App\Http\Requests\Order\SearchRequest;
 use App\Http\Requests\Order\UpdateRequest;
+use App\Http\Requests\Order\UpdateStatusRequest;
 use App\Http\Resource\Order\OrderResource;
 use App\Repositories\Order\OrderRepositoryInterface;
 
@@ -25,14 +26,14 @@ class OrderController extends Controller
      *
      * @param AllRequest $request
      */
-        public function index(AllRequest $request)
+    public function index(AllRequest $request)
     {
         return OrderResource::collection(
             $this->order
-                ->enablePagination()
-                ->setPerPage($request->get(')
+            ->enablePagination()
+            ->setPerPage($request->get(')
                 limit', config('api.common.default-page-size')))
-                ->all($request->get('load', []), $request->order)
+            ->all($request->get('load', []), $request->order)
         );
     }
 
@@ -104,4 +105,15 @@ class OrderController extends Controller
         return response()->error(config('api.order.delete-error'), 422);
     }
 
+    /**
+     * Update Order status.
+     *
+     * @param  $request
+     * @return mixed
+     */
+
+    public function updateStatus(UpdateStatusRequest $request, $orderId)
+    {
+        return new OrderResource($this->order->updateStatus($request->sanitize(), $orderId));
+    }
 }

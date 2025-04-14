@@ -50,7 +50,7 @@ class ApiException extends Exception
 
     public const EMAIL_NOT_FOUND = 415;
 
-    const UNEXPECTED_MATCH_VALUE            = 552;
+    public const UNEXPECTED_MATCH_VALUE = 552;
 
     /**
      * Constructor.

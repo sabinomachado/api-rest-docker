@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'id_client',
@@ -18,6 +19,21 @@ class Order extends Model
         'return_date',
         'status',
     ];
+
+    public function scopeForLoggedUser($query)
+    {
+        return $query->where('id_user', auth()->id());
+    }
+
+    protected static function booted()
+    {
+        static::updated(function ($order) {
+            if ($order->isDirty('status')) {
+                $user = $order->user;
+                $user->notify(new \App\Notifications\OrderStatusUpdated($order));
+            }
+        });
+    }
 
     public function client()
     {

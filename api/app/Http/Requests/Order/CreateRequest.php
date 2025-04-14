@@ -28,7 +28,6 @@ class CreateRequest extends ApiRequest
             'id_user' => 'required|int|exists:users,id',
             'boarding_date' => 'required|date_format:Y-m-d',
             'return_date' => 'required|date_format:Y-m-d',
-            'status' => 'required|in:pending,confirmed,canceled',
         ];
     }
 
@@ -46,11 +45,26 @@ class CreateRequest extends ApiRequest
 
     public function withValidator($validator)
     {
-        $validator->sometimes(['co_debtor_name', 'co_debtor_phone', 'co_debtor_email', 'co_debtor_cpf'], 'required', function (Fluent $input) {
-                return !empty($input->co_debtor_name) || !empty($input->co_debtor_phone) || !empty($input->co_debtor_email) || !empty($input->co_debtor_cpf);
-        });
-        $validator->sometimes(['witness_name', 'witness_phone', 'witness_email', 'witness_cpf'], 'required', function (Fluent $input) {
-                return !empty($input->witness_name) || !empty($input->witness_phone) || !empty($input->witness_email) || !empty($input->witness_cpf);
-        });
+        $validator->sometimes(
+            ['co_debtor_name', 'co_debtor_phone', 'co_debtor_email', 'co_debtor_cpf'],
+            'required',
+            function (Fluent $input) {
+                return !empty($input->co_debtor_name)
+                    || !empty($input->co_debtor_phone)
+                    || !empty($input->co_debtor_email)
+                    || !empty($input->co_debtor_cpf);
+            }
+        );
+
+        $validator->sometimes(
+            ['witness_name', 'witness_phone', 'witness_email', 'witness_cpf'],
+            'required',
+            function (Fluent $input) {
+                return !empty($input->witness_name)
+                    || !empty($input->witness_phone)
+                    || !empty($input->witness_email)
+                    || !empty($input->witness_cpf);
+            }
+        );
     }
 }
