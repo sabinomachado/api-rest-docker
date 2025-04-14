@@ -172,6 +172,7 @@ return [
         App\Providers\DynamicRouteServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ApiResponseServiceProvider::class,
+        Laravel\Sanctum\SanctumServiceProvider::class,
     ])->toArray(),
 
     /*
