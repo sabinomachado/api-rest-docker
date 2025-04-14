@@ -25,7 +25,6 @@ class DynamicRouteServiceProvider extends ServiceProvider
     {
         foreach (glob(base_path('routes/api/*.php')) as $routeFile) {
             Route::prefix('api/v1')
-                ->middleware('auth.apikey')
                 ->namespace($this->namespace)
                 ->group($routeFile);
         }

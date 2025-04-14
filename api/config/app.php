@@ -171,6 +171,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\DynamicRouteServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ApiResponseServiceProvider::class,
     ])->toArray(),
 
     /*
