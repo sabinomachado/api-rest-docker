@@ -2,38 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * @var UserRepositoryInterface
+     */
+    private UserRepositoryInterface $user;
+
+    public function __construct(UserRepositoryInterface $user)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        if (!Auth::attempt($credentials)) {
-            throw ValidationException::withMessages([
-                'email' => ['As credenciais estão incorretas.'],
-            ]);
-        }
-
-        $user = Auth::user();
-
-        return response()->json([
-            'user' => $user,
-            'token' => $user->createToken('auth_token')->plainTextToken,
-        ]);
+        $this->middleware('auth:sanctum')->only(['logout', 'refresh', 'me']);
+        $this->user = $user;
     }
 
-    public function logout(Request $request)
+    public function login(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json(['message' => 'Logout realizado com sucesso']);
+        return $this->user->login($request);
     }
+
+    public function logout(): \Illuminate\Http\JsonResponse
+    {
+        return $this->user->logout();
+    }
+
+    public function refresh(): \Illuminate\Http\JsonResponse
+    {
+        return $this->user->refresh();
+    }
+
+    public function me(): \Illuminate\Http\JsonResponse
+    {
+        return $this->user->me();
+    }
+
 }
