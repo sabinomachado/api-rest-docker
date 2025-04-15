@@ -298,7 +298,7 @@ class OrderControllerTest extends TestCase
 
         $this->assertDatabaseHas('orders', [
             'id' => $order->id,
-            'status' => 'pending' // Status não deve mudar
+            'status' => 'pending'
         ]);
     }
 }
