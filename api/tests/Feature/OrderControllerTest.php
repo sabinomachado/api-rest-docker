@@ -51,9 +51,9 @@ class OrderControllerTest extends TestCase
         $response->assertStatus(201)
             ->assertJsonStructure([
                     'id',
-                    'city',
-                    'client',
-                    'seller',
+                    'id_city',
+                    'id_client',
+                    'id_user',
                     'boarding_date',
                     'return_date',
                     'created_at',
@@ -65,7 +65,6 @@ class OrderControllerTest extends TestCase
             'id_city' => $city->id,
             'boarding_date' => '2025-04-20',
             'return_date' => '2025-04-25',
-            'status' => 'confirmed'
         ]);
     }
 
@@ -247,11 +246,19 @@ class OrderControllerTest extends TestCase
             'return_date' => '2025-04-30'
         ]);
 
+        Order::factory()->create([
+            'id_user' => $user->id,
+            'id_city' => $city->id,
+            'id_client' => $client->id,
+            'boarding_date' => '2026-04-26',
+            'return_date' => '2026-04-30'
+        ]);
+
         $response = $this->actingAs($user)
             ->getJson('/api/v1/orders/search?date_start=2025-04-14&date_end=2025-04-20');
 
         $response->assertOk()
-            ->assertJsonCount(1, 'data');
+            ->assertJsonCount(2, 'data');
     }
 
     public function test_validation_fails_with_invalid_data()

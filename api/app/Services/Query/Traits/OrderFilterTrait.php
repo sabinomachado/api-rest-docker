@@ -101,7 +101,6 @@ trait OrderFilterTrait
         $end = Arr::get($options, 'end');
 
 
-        dd("aaaa");
         if ($start && $end) {
             $startDate = Carbon::parse($start)->startOfDay();
             $endDate = Carbon::parse($end)->endOfDay();

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\ApiException;
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +27,28 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof ApiException) {
+            if ($e->getCode() === ApiException::ACCESS_DENIED) {
+                return response()->json([
+                    'error' => 'Access denied',
+                    'message' => $e->getMessage()
+                ], 403);
+            }
+        }
+
+        return parent::render($request, $e);
     }
 }
