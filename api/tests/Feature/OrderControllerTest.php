@@ -266,7 +266,6 @@ class OrderControllerTest extends TestCase
         $user = User::factory()->create();
 
         $invalidData = [
-            // Dados incompletos
             'boarding_date' => '2025-04-20',
             'return_date' => '2025-04-25',
         ];
